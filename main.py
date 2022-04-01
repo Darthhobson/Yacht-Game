@@ -273,11 +273,9 @@ def reroll(dice):
     print("====================")
     print(f"Rolls left: {rolls}")
     print("====================")
-    print(f""
-          f"\nStored Dice One: [{spare_one}]"
+    print(f"Stored Dice One: [{spare_one}]"
           f"\nStored Dice Two: [{spare_two}]"
-          f"\nStored Dice Three: [{spare_three}]"
-          f"\n")
+          f"\nStored Dice Three: [{spare_three}]")
     print("====================")
 
 
@@ -291,7 +289,7 @@ def reroll(dice):
             if choice not in range(3):
                 print("Invalid Choice, Try again!")
                 continue
-            else
+            else:
                 break
 
         except ValueError:
@@ -303,7 +301,30 @@ def reroll(dice):
 
     if choice == 1:
         print(f"You rolled {dice}")
-        selection = int(input("Please select the dice number you would like to re-roll"))
+        while True:
+            try:
+                selection = int(input("Please select the dice number you would like to re-roll"))
+
+                if selection not in range(7):
+                    print("Invalid Selection! Please Try again!")
+                    continue
+                elif selection not in dice:
+                    print("The number you selected is not in your dice set! Please try again!")
+                    continue
+                else:
+                    break
+
+            except ValueError:
+                print("That was not a number! Please try again!")
+
+            except Exception as err:
+                print(f"Something went wrong! >>> {err}")
+
+        new = random.randint(1, 6)
+        print(f"You re-rolled {selection} and got a {new}")
+        dice.remove(selection)
+        dice.append(new)
+        print(f"Your dice set is now {dice}")
 
 
 
