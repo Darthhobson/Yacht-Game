@@ -1,7 +1,13 @@
 import random
 
-
 total_score = 0
+rolls = 3
+
+aside = [None,None,None]
+
+spare_one = aside[0]
+spare_two = aside[1]
+spare_three = aside[2]
 
 usedOptions = []
 
@@ -62,6 +68,7 @@ def taketurn(dicelist, total_score):
     
     input("Press enter to see the move set!\n")
     showoptions()
+    print(f"You rolled {dice}")
 
     while True:
         try:
@@ -261,20 +268,59 @@ def taketurn(dicelist, total_score):
         print("[!] Something went wrong!")
 
 
+def reroll(dice):
+
+    print("====================")
+    print(f"Rolls left: {rolls}")
+    print("====================")
+    print(f""
+          f"\nStored Dice One: [{spare_one}]"
+          f"\nStored Dice Two: [{spare_two}]"
+          f"\nStored Dice Three: [{spare_three}]"
+          f"\n")
+    print("====================")
+
+
+    while True:
+        try:
+            choice = int(input("Please Select an option!"
+                             "\n(1) Re roll a dice"
+                             "\n(2) Set aside a dice"
+                             "\n(3) Select a stored dice"))
+
+            if choice not in range(3):
+                print("Invalid Choice, Try again!")
+                continue
+            else
+                break
+
+        except ValueError:
+            print("That was not a number! Please try again")
+            continue
+
+        except Exception as err:
+            print(f"Something went wrong! >>> {err}")
+
+    if choice == 1:
+        print(f"You rolled {dice}")
+        selection = int(input("Please select the dice number you would like to re-roll"))
+
+
+
+
+
+
 def play():
     print("Welcome to the Yacht game! The aim of the game is to roll sets of 5 dice in order to score points in "
           "accordance with the 12 available moves, each move may only be used once so pick carefully")
     print("")
-    print(
-        "You may reroll any dice up to 3 times! You may also set aside dice and re roll. These set aside dice may be accessed later one!")
+    print("You may re-roll any dice up to 3 times! You may also set aside dice and re-roll. These set aside dice"
+          "may be accessed later one!")
 
     input("Press ENTER to roll the dice!")
 
-    spare_one = None
-    spare_two = None
-    spare_three = None
 
-    rolls = 3
+
 
     print("Rolling the first set of dice...")
     dice = diceroll()
@@ -282,28 +328,31 @@ def play():
 
     while True:
         try:
-            print("")
-            rolling = int(input("Would you like to re roll any of your dice?\n(1) >>> YES\n(2) >>> NO\n"))
-            if rolling not in range(2):
-                print("Invalid Choice! Please pick again!")
-            else:
+            choice = int(input("Would you like to re-roll, set aside or access set aside dice?"
+                           "\n(1) >>> YES"
+                           "\n(2) >>> NO\n"))
+
+            if choice not in range(3):
+                print("Invalid Choice! Please try again!")
+                continue
+
+            elif choice == 1:
+                reroll(dice)
                 break
-                else:
-                    print("Something went wrong!")
+
+            elif choice == 2:
+                taketurn(dice,total_score)
+                break
+
+
         except ValueError:
-            print("That was not a number! Please pick again!")
+            print("That was not a number! Try again!")
             continue
+
         except Exception as err:
-            print(f"Something went wrong! >>> {err}")
+            print(f"Something Went Wrong! >>> {err}")
 
 
-    if rolling == 1:
-
-
-    elif rolling = 2:
-
-    else:
-        print("Something went wrong!")
 
 if __name__ == "__main__":
     play()
