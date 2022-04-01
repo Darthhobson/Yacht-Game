@@ -1,5 +1,5 @@
 import random
-import os
+
 
 total_score = 0
 
