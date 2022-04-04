@@ -1,9 +1,9 @@
 import random
+import os
 
-total_score = 0
 rolls = 3
 
-aside = [None,None,None]
+aside = ["Empty", "Empty", "Empty"]
 
 spare_one = aside[0]
 spare_two = aside[1]
@@ -12,18 +12,18 @@ spare_three = aside[2]
 usedOptions = []
 
 optionList = {
-              1: "Ones",
-              2: "Twos",
-              3: "Fours",
-              4: "Fives",
-              5: "Sixes",
-              6: "Full House",
-              7: "Four-Of-A-Kind",
-              8: "Little Straight",
-              9: "Big Straight",
-              10: "Choice",
-              11: "Yacht"
-              }
+    1: "Ones",
+    2: "Twos",
+    3: "Fours",
+    4: "Fives",
+    5: "Sixes",
+    6: "Full House",
+    7: "Four-Of-A-Kind",
+    8: "Little Straight",
+    9: "Big Straight",
+    10: "Choice",
+    11: "Yacht"
+}
 
 
 def showoptions():
@@ -57,15 +57,15 @@ def diceroll():
     for i in range(5):
         roll = random.randint(min, max)
         dicelist.append(roll)
-    
+
     return dicelist
 
 
-def taketurn(dicelist, total_score):
+def taketurn(dicelist):
     dice = dicelist
     score = 0
     user_option = ""
-    
+
     input("Press enter to see the move set!\n")
     showoptions()
     print(f"You rolled {dice}")
@@ -73,7 +73,7 @@ def taketurn(dicelist, total_score):
     while True:
         try:
             user_option = int(input("Please Select Your Option!"))
-            if user_option not in range(11):
+            if user_option not in range(12):
                 print("Invalid Option! Please Try Again!")
             else:
                 break
@@ -84,7 +84,7 @@ def taketurn(dicelist, total_score):
     if user_option in usedOptions:
         name = optionList.get(user_option)
         print(f"You have chosen {name} Before, Please select a different move!")
-        taketurn(dicelist, total_score)
+        taketurn(dicelist)
     else:
         pass
 
@@ -100,9 +100,9 @@ def taketurn(dicelist, total_score):
 
         else:
             score = len(ones) * 1
-            total_score = total_score + score
+            total_score += score
             print(
-                f"You had {len(ones)} ones in your dice roll set\nScore this round is {score}\nTotal Score: {total_score}")
+                f"You had {len(ones)} ones in your dice roll set\nScore this round is {score}")
             usedOptions.append(user_option)
 
 
@@ -113,14 +113,14 @@ def taketurn(dicelist, total_score):
                 twos.append(2)
 
         if len(twos) == 0:
-            print(f"You had no twos in your dice rolls set\nScore this round is 0\nTotal Score: {total_score}")
+            print(f"You had no twos in your dice rolls set\nScore this round is 0")
             usedOptions.append(user_option)
 
         else:
             score = len(twos) * 1
-            total_score = total_score + score
+            total_score += score
             print(
-                f"You had {len(twos)} twos in your dice roll set\nScore this round is {score}\nTotal Score: {total_score}")
+                f"You had {len(twos)} twos in your dice roll set\nScore this round is {score}")
             usedOptions.append(user_option)
 
     elif user_option == 3:
@@ -130,14 +130,14 @@ def taketurn(dicelist, total_score):
                 fours.append(4)
 
         if len(fours) == 0:
-            print(f"You had no fours in your dice rolls set\nScore this round is 0\nTotal Score: {total_score}")
+            print(f"You had no fours in your dice rolls set\nScore this round is 0")
             usedOptions.append(user_option)
 
         else:
             score = len(fours) * 1
-            total_score = total_score + score
+            total_score += score
             print(
-                f"You had {len(fours)} fours in your dice roll set\nScore this round is {score}\nTotal Score: {total_score}")
+                f"You had {len(fours)} fours in your dice roll set\nScore this round is {score}")
             usedOptions.append(user_option)
 
 
@@ -148,14 +148,14 @@ def taketurn(dicelist, total_score):
                 fives.append(5)
 
         if len(fives) == 0:
-            print(f"You had no fives in your dice rolls set\nScore this round is 0\nTotal Score: {total_score}")
+            print(f"You had no fives in your dice rolls set\nScore this round is 0")
             usedOptions.append(user_option)
 
         else:
             score = len(fives) * 1
-            total_score = total_score + score
+            total_score += score
             print(
-                f"You had {len(fives)} fives in your dice roll set\nScore this round is {score}\nTotal Score: {total_score}")
+                f"You had {len(fives)} fives in your dice roll set\nScore this round is {score}")
             usedOptions.append(user_option)
 
     elif user_option == 5:
@@ -166,14 +166,14 @@ def taketurn(dicelist, total_score):
                 sixes.append(6)
 
         if len(sixes) == 0:
-            print(f"You had no sixes in your dice rolls set\nScore this round is 0\nTotal Score: {total_score}")
+            print(f"You had no sixes in your dice rolls set\nScore this round is 0")
             usedOptions.append(user_option)
 
         else:
             score = len(sixes) * 1
-            total_score = total_score + score
+            total_score += score
             print(
-                f"You had {len(sixes)} sixes in your dice roll set\nScore this round is {score}\nTotal Score: {total_score}")
+                f"You had {len(sixes)} sixes in your dice roll set\nScore this round is {score}")
             usedOptions.append(user_option)
 
     elif user_option == 6:
@@ -194,11 +194,11 @@ def taketurn(dicelist, total_score):
 
         if result:
             score = sum(dice)
-            total_score = total_score + score
-            print(f"You rolled a Full House!\nScore this round is {score}\nTotal Score: {total_score}")
+            total_score += score
+            print(f"You rolled a Full House!\nScore this round is {score}")
             usedOptions.append(user_option)
         else:
-            print(f"You did not roll a Full house!\nScore this round is {score}\nTotal Score: {total_score}")
+            print(f"You did not roll a Full house!\nScore this round is {score}")
 
     elif user_option == 7:
 
@@ -210,10 +210,11 @@ def taketurn(dicelist, total_score):
 
         if result:
             score = dice[0] * 4
-            print(f"You rolled four of the same dice\nScore this round is {score}\nTotal Score: {total_score}")
+            total_score += score
+            print(f"You rolled four of the same dice\nScore this round is {score}")
 
         else:
-            print(f"You did not roll four of the same dice\nScore this round is {score}\nTotal Score: {total_score}")
+            print(f"You did not roll four of the same dice\nScore this round is {score}")
 
 
 
@@ -224,11 +225,11 @@ def taketurn(dicelist, total_score):
 
         if result:
             score = 30
-            total_score = total_score + score
-            print(f"You rolled 1-2-3-4-5! Score this round is {score}\nTotal Score: {total_score}")
+            total_score += score
+            print(f"You rolled 1-2-3-4-5! Score this round is {score}")
             usedOptions.append(user_option)
         else:
-            print(f"You did not roll 1-2-3-4-5 Score this round is 0\nTotal Score: {total_score}")
+            print(f"You did not roll 1-2-3-4-5 Score this round is 0")
 
 
     elif user_option == 9:
@@ -238,15 +239,15 @@ def taketurn(dicelist, total_score):
 
         if result:
             score = 30
-            total_score = total_score + score
-            print(f"You rolled 2-3-4-5-6 Score this round is {score}\nTotal Score: {total_score}")
+            total_score += score
+            print(f"You rolled 2-3-4-5-6 Score this round is {score}")
         else:
-            print(f"You did not roll 2-3-4-5-6 Score this round is 0\nTotal Score: {total_score}")
+            print(f"You did not roll 2-3-4-5-6 Score this round is 0")
 
     elif user_option == 10:
         score = sum(dice)
-        total_score = total_score + score
-        print(f"You rolled {str(dice)} Score this round is {score}\nTotal Score: {total_score}")
+        total_score += score
+        print(f"You rolled {str(dice)} Score this round is {score}")
 
 
     elif user_option == 11:
@@ -255,21 +256,24 @@ def taketurn(dicelist, total_score):
         for num in dice:
             if first_element != num:
                 result = False
-                print(f"Your dice rolls are not all equal!\nScore this round is 0\nTotal Score:{total_score}")
+                print(f"Your dice rolls are not all equal!\nScore this round is 0")
             else:
                 result = True
             if result:
                 score = 50
-                total_score = total_score + score
-                print(f"All your dice rolls are the same!\nScore this round is {score}\nTotal Score:{total_score}")
+                total_score += score
+                print(f"All your dice rolls are the same!\nScore this round is {score}")
 
 
     else:
         print("[!] Something went wrong!")
 
+    total_score = total_score + score
 
-def reroll(dice):
+    return total_score
 
+
+def reroll(dice, rolls):
     print("====================")
     print(f"Rolls left: {rolls}")
     print("====================")
@@ -278,15 +282,15 @@ def reroll(dice):
           f"\nStored Dice Three: [{spare_three}]")
     print("====================")
 
-
     while True:
         try:
             choice = int(input("Please Select an option!"
-                             "\n(1) Re roll a dice"
-                             "\n(2) Set aside a dice"
-                             "\n(3) Select a stored dice"))
+                               "\n(1) Re roll a dice"
+                               "\n(2) Set aside a dice"
+                               "\n(3) Select a stored dice"
+                               "\n(4) Exit and take turn"))
 
-            if choice not in range(3):
+            if choice not in range(5):
                 print("Invalid Choice, Try again!")
                 continue
             else:
@@ -300,6 +304,11 @@ def reroll(dice):
             print(f"Something went wrong! >>> {err}")
 
     if choice == 1:
+        if rolls == 0:
+            print("You have 0 rolls left! Please select another option!\n")
+            reroll(dice, rolls)
+        else:
+            pass
         print(f"You rolled {dice}")
         while True:
             try:
@@ -320,49 +329,113 @@ def reroll(dice):
             except Exception as err:
                 print(f"Something went wrong! >>> {err}")
 
-        new = random.randint(1, 6)
+        new = diceroll()
+        new = random.choice(new)
+        rolls = rolls - 1
         print(f"You re-rolled {selection} and got a {new}")
         dice.remove(selection)
         dice.append(new)
         print(f"Your dice set is now {dice}")
 
 
+    elif choice == 2:
+        print(f"You rolled {dice}")
+        while True:
+            try:
+                selection = int(input("Please select the dice number you would like to set aside"))
+
+                if selection not in range(7):
+                    print("Invalid Selection! Please Try again!")
+                    continue
+                elif selection not in dice:
+                    print("The number you selected is not in your dice set! Please try again!")
+                    continue
+                else:
+                    break
+
+            except ValueError:
+                print("That was not a number! Please try again!")
+
+            except Exception as err:
+                print(f"Something went wrong! >>> {err}")
+
+        aside.append(selection)
+        print(f"You have set aside {selection}")
+
+        while True:
+            try:
+                choicethree = int(input("Would you like to roll a new dice? or access a stored dice to replace the"
+                                        "one you set aside?"
+                                        "\n(1) Re-roll"
+                                        "\n(2) Set aside"))
+
+                if choicethree not in range(3):
+                    print("Invalid selection! Please try again!")
+                    continue
+
+                else:
+                    break
+
+            except ValueError:
+                print("That was not a number! Please try again")
+                continue
+
+    while True:
+        try:
+            choicetwo = int(input("Would you like select another option or continue?"
+                                  f"Rolls left: {rolls}"
+                                  "\n(1) Select another option"
+                                  "\n(2) Continue..."))
+
+            if choicetwo not in range(3):
+                print("Invalid choice! Please try again!")
+                continue
+
+            else:
+                break
+
+        except ValueError:
+            print("That was not a number! Please try again!")
+            continue
+
+    if choicetwo == 1:
+        reroll(dice, rolls)
+
+    elif choicetwo == 2:
+        taketurn(dice, total_score)
 
 
+    else:
+        print("[!] Something went wrong!")
 
 
-def play():
-    print("Welcome to the Yacht game! The aim of the game is to roll sets of 5 dice in order to score points in "
-          "accordance with the 12 available moves, each move may only be used once so pick carefully")
-    print("")
-    print("You may re-roll any dice up to 3 times! You may also set aside dice and re-roll. These set aside dice"
-          "may be accessed later one!")
-
+def play(total_score):
+    total_score = total_score
+    print(f"Total Score: {total_score}")
     input("Press ENTER to roll the dice!")
 
-
-
-
-    print("Rolling the first set of dice...")
+    print("Rolling the dice...")
     dice = diceroll()
     print(f"You rolled {dice}")
 
     while True:
         try:
             choice = int(input("Would you like to re-roll, set aside or access set aside dice?"
-                           "\n(1) >>> YES"
-                           "\n(2) >>> NO\n"))
+                               "\n(1) >>> YES"
+                               "\n(2) >>> NO\n"))
 
             if choice not in range(3):
                 print("Invalid Choice! Please try again!")
                 continue
 
             elif choice == 1:
-                reroll(dice)
+                reroll(dice, rolls)
+                os.system("cls")
                 break
 
             elif choice == 2:
-                taketurn(dice,total_score)
+                taketurn(dice, total_score)
+                os.system("cls")
                 break
 
 
@@ -374,6 +447,14 @@ def play():
             print(f"Something Went Wrong! >>> {err}")
 
 
-
 if __name__ == "__main__":
-    play()
+    print("Welcome to the Yacht game! The aim of the game is to roll sets of 5 dice in order to score points in "
+          "accordance with the 12 available moves, each move may only be used once so pick carefully")
+    print("")
+    print("You may re-roll any dice up to 3 times! You may also set aside dice and re-roll. These set aside dice"
+          "may be accessed later one!")
+
+    total_score = 0
+
+    while len(usedOptions) < 11:
+        play(total_score)
