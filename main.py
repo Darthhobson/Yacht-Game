@@ -1,6 +1,38 @@
 import random
 import os
 
+dice_art = (("""
+   _______
+  /\ o o o\
+ /o \ o o o\_______
+<    >------>   o /|
+ \ o/  o   /_____/o|
+  \/______/     |oo|
+        |   o   |o/
+        |_______|/
+"""))
+
+
+
+game_over_art = """
+┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
+███▀▀▀██┼███▀▀▀███┼███▀█▄█▀███┼██▀▀▀
+██┼┼┼┼██┼██┼┼┼┼┼██┼██┼┼┼█┼┼┼██┼██┼┼┼
+██┼┼┼▄▄▄┼██▄▄▄▄▄██┼██┼┼┼▀┼┼┼██┼██▀▀▀
+██┼┼┼┼██┼██┼┼┼┼┼██┼██┼┼┼┼┼┼┼██┼██┼┼┼
+███▄▄▄██┼██┼┼┼┼┼██┼██┼┼┼┼┼┼┼██┼██▄▄▄
+┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
+███▀▀▀███┼▀███┼┼██▀┼██▀▀▀┼██▀▀▀▀██▄┼
+██┼┼┼┼┼██┼┼┼██┼┼██┼┼██┼┼┼┼██┼┼┼┼┼██┼
+██┼┼┼┼┼██┼┼┼██┼┼██┼┼██▀▀▀┼██▄▄▄▄▄▀▀┼
+██┼┼┼┼┼██┼┼┼██┼┼█▀┼┼██┼┼┼┼██┼┼┼┼┼██┼
+███▄▄▄███┼┼┼─▀█▀┼┼─┼██▄▄▄┼██┼┼┼┼┼██▄
+┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
+
+"""
+
+
+
 total_score = 0
 rolls = 3
 
@@ -85,7 +117,7 @@ def taketurn(dicelist, total_score):
     if user_option in usedOptions:
         name = optionList.get(user_option)
         print(f"You have chosen {name} Before, Please select a different move!")
-        taketurn(dicelist, )
+        taketurn(dicelist, total_score)
     else:
         pass
 
@@ -207,6 +239,7 @@ def taketurn(dicelist, total_score):
             usedOptions.append(user_option)
         else:
             print(f"You did not roll a Full house!\nScore this round is {score}")
+            usedOptions.append(user_option)
 
     elif user_option == 7:
 
@@ -221,9 +254,11 @@ def taketurn(dicelist, total_score):
             total_score = total_score + score
 
             print(f"You rolled four of the same dice\nScore this round is {score}")
+            usedOptions.append(user_option)
 
         else:
             print(f"You did not roll four of the same dice\nScore this round is {score}")
+            usedOptions.append(user_option)
 
 
 
@@ -240,6 +275,7 @@ def taketurn(dicelist, total_score):
             usedOptions.append(user_option)
         else:
             print(f"You did not roll 1-2-3-4-5 Score this round is 0")
+            usedOptions.append(user_option)
 
 
     elif user_option == 9:
@@ -252,14 +288,17 @@ def taketurn(dicelist, total_score):
             total_score = total_score + score
 
             print(f"You rolled 2-3-4-5-6 Score this round is {score}")
+            usedOptions.append(user_option)
         else:
             print(f"You did not roll 2-3-4-5-6 Score this round is 0")
+            usedOptions.append(user_option)
 
     elif user_option == 10:
         score = sum(dice)
         total_score = total_score + score
 
         print(f"You rolled {str(dice)} Score this round is {score}")
+        usedOptions.append(user_option)
 
 
     elif user_option == 11:
@@ -269,13 +308,14 @@ def taketurn(dicelist, total_score):
             if first_element != num:
                 result = False
                 print(f"Your dice rolls are not all equal!\nScore this round is 0")
+                usedOptions.append(user_option)
             else:
                 result = True
             if result:
                 score = 50
                 total_score = total_score + score
                 print(f"All your dice rolls are the same!\nScore this round is {score}")
-
+                usedOptions.append(user_option)
 
     else:
         print("[!] Something went wrong!")
@@ -297,10 +337,12 @@ def reroll(dice, rolls):
     while True:
         try:
             choice = int(input("Please Select an option!"
+                               "\n========================="
                                "\n(1) Re roll a dice"
                                "\n(2) Set aside a dice"
                                "\n(3) Select a stored dice"
-                               "\n(4) Exit and take turn"))
+                               "\n(4) Exit and take turn"
+                               "\n========================="))
 
             if choice not in range(5):
                 print("Invalid Choice, Try again!")
@@ -381,6 +423,8 @@ def reroll(dice, rolls):
             try:
                 choicethree = int(input("Would you like to roll a new dice? or access a stored dice to replace the"
                                         "one you set aside?"
+                                        "\n==========================================================================="
+                                        "======="
                                         "\n(1) Re-roll"
                                         "\n(2) Set aside"))
 
@@ -403,7 +447,9 @@ def reroll(dice, rolls):
                 pass
 
             new = diceroll()
+            rolls = rolls - 1
             new = random.choice(new)
+            dice.append(new)
             print(f"You rolled {new}")
             print(f"Your full dice set is {dice}")
 
@@ -416,12 +462,12 @@ def reroll(dice, rolls):
             while True:
                 try:
                     selection = int(input("Please Select A Dice!"
-                                        "========================"
+                                        "\n========================"
                                         "Stored Dice:"
                                         f"\n(1) Dice One: {spare_one}"
                                         f"\n(2) Dice Two: {spare_two}"
                                         f"\n(3) Dice Three: {spare_three}"
-                                        f"========================"))
+                                        f"\n========================"))
 
                     if selection not in range(4):
                         print("Invalid Choice! Please try again!")
@@ -469,12 +515,12 @@ def reroll(dice, rolls):
         while True:
             try:
                 selection = int(input("Please Select A Dice!"
-                                      "========================"
+                                      "\n========================"
                                       "Stored Dice:"
                                       f"\n(1) Dice One: {spare_one}"
                                       f"\n(2) Dice Two: {spare_two}"
                                       f"\n(3) Dice Three: {spare_three}"
-                                      f"========================"))
+                                      f"\n========================"))
 
                 if selection not in range(4):
                     print("Invalid Choice! Please try again!")
@@ -525,9 +571,11 @@ def reroll(dice, rolls):
     while True:
         try:
             choicetwo = int(input("Would you like select another option or continue?"
-                                  f"Rolls left: {rolls}"
+                                  f"\nRolls left: {rolls}"
+                                  f"\n==============================================================="
                                   "\n(1) Select another option"
-                                  "\n(2) Continue..."))
+                                  "\n(2) Continue..."
+                                  "\n==================================================================="))
 
             if choicetwo not in range(3):
                 print("Invalid choice! Please try again!")
@@ -544,7 +592,7 @@ def reroll(dice, rolls):
         reroll(dice, rolls)
 
     elif choicetwo == 2:
-        taketurn(dice)
+        taketurn(dice, total_score)
 
 
     else:
@@ -560,16 +608,21 @@ def play(total_score):
 
     print(f"Total Score: {total_score}")
     input("Press ENTER to roll the dice!")
-
+    print("")
+    print(dice_art)
+    print("")
     print("Rolling the dice...")
+
     dice = diceroll()
     print(f"You rolled {dice}")
 
     while True:
         try:
             choice = int(input("Would you like to re-roll, set aside or access set aside dice?"
+                               "\n==============================================================="
                                "\n(1) >>> YES"
-                               "\n(2) >>> NO\n"))
+                               "\n(2) >>> NO\n"
+                               "=================================================================\n"))
 
             if choice not in range(3):
                 print("Invalid Choice! Please try again!")
@@ -592,8 +645,12 @@ def play(total_score):
 
 
 def game_over():
-    print("The game is over! All the moves have been used!\n"
-          f"Total Score is: {total_score}")
+    print(game_over_art)
+    print("==================================")
+    print(f"TOTAL SCORE: [{total_score}]      ")
+    print("===================================")
+    raise systemexit
+
 
 
 if __name__ == "__main__":
@@ -602,7 +659,7 @@ if __name__ == "__main__":
           "accordance with the 12 available moves, each move may only be used once so pick carefully")
     print("")
     print("You may re-roll any dice up to 3 times! You may also set aside dice and re-roll. These set aside dice"
-          "may be accessed later one!")
+          "may be accessed later one!\n")
 
 
     play(total_score)
