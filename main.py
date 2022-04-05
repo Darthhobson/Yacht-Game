@@ -15,6 +15,7 @@ dice_art = (("""
 
 
 game_over_art = """
+
 ┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
 ███▀▀▀██┼███▀▀▀███┼███▀█▄█▀███┼██▀▀▀
 ██┼┼┼┼██┼██┼┼┼┼┼██┼██┼┼┼█┼┼┼██┼██┼┼┼
@@ -59,6 +60,8 @@ optionList = {
 }
 
 
+
+
 def showoptions():
     options = [
         "Name:                    Description:                                 Score:",
@@ -94,7 +97,7 @@ def diceroll():
     return dicelist
 
 
-def taketurn(dicelist, total_score):
+def taketurn(dicelist, total_score, usedOptions):
     dice = dicelist
     score = 0
     user_option = ""
@@ -117,7 +120,7 @@ def taketurn(dicelist, total_score):
     if user_option in usedOptions:
         name = optionList.get(user_option)
         print(f"You have chosen {name} Before, Please select a different move!")
-        taketurn(dicelist, total_score)
+        taketurn(dicelist, total_score, usedOptions)
     else:
         pass
 
@@ -131,6 +134,7 @@ def taketurn(dicelist, total_score):
         if len(ones) == 0:
             print("You had no ones in your dice roll set\nScore this round is 0")
             usedOptions.append(user_option)
+            game_over_check(usedOptions, total_score)
 
         else:
             score = len(ones) * 1
@@ -139,6 +143,7 @@ def taketurn(dicelist, total_score):
             print(
                 f"You had {len(ones)} ones in your dice roll set\nScore this round is {score}")
             usedOptions.append(user_option)
+            game_over_check(usedOptions, total_score)
 
 
     elif user_option == 2:
@@ -150,6 +155,7 @@ def taketurn(dicelist, total_score):
         if len(twos) == 0:
             print(f"You had no twos in your dice rolls set\nScore this round is 0")
             usedOptions.append(user_option)
+            game_over_check(usedOptions, total_score)
 
         else:
             score = len(twos) * 1
@@ -158,6 +164,7 @@ def taketurn(dicelist, total_score):
             print(
                 f"You had {len(twos)} twos in your dice roll set\nScore this round is {score}")
             usedOptions.append(user_option)
+            game_over_check(usedOptions, total_score)
 
     elif user_option == 3:
         fours = []
@@ -168,6 +175,7 @@ def taketurn(dicelist, total_score):
         if len(fours) == 0:
             print(f"You had no fours in your dice rolls set\nScore this round is 0")
             usedOptions.append(user_option)
+            game_over_check(usedOptions, total_score)
 
         else:
             score = len(fours) * 1
@@ -176,6 +184,7 @@ def taketurn(dicelist, total_score):
             print(
                 f"You had {len(fours)} fours in your dice roll set\nScore this round is {score}")
             usedOptions.append(user_option)
+            game_over_check(usedOptions, total_score)
 
 
     elif user_option == 4:
@@ -187,6 +196,7 @@ def taketurn(dicelist, total_score):
         if len(fives) == 0:
             print(f"You had no fives in your dice rolls set\nScore this round is 0")
             usedOptions.append(user_option)
+            game_over_check(usedOptions, total_score)
 
         else:
             score = len(fives) * 1
@@ -195,6 +205,7 @@ def taketurn(dicelist, total_score):
             print(
                 f"You had {len(fives)} fives in your dice roll set\nScore this round is {score}")
             usedOptions.append(user_option)
+            game_over_check(usedOptions, total_score)
 
     elif user_option == 5:
         sixes = []
@@ -206,14 +217,15 @@ def taketurn(dicelist, total_score):
         if len(sixes) == 0:
             print(f"You had no sixes in your dice rolls set\nScore this round is 0")
             usedOptions.append(user_option)
+            game_over_check(usedOptions, total_score)
 
         else:
             score = len(sixes) * 1
             total_score = total_score + score
 
-            print(
-                f"You had {len(sixes)} sixes in your dice roll set\nScore this round is {score}")
+            print(f"You had {len(sixes)} sixes in your dice roll set\nScore this round is {score}")
             usedOptions.append(user_option)
+            game_over_check(usedOptions, total_score)
 
     elif user_option == 6:
 
@@ -237,9 +249,11 @@ def taketurn(dicelist, total_score):
 
             print(f"You rolled a Full House!\nScore this round is {score}")
             usedOptions.append(user_option)
+            game_over_check(usedOptions, total_score)
         else:
             print(f"You did not roll a Full house!\nScore this round is {score}")
             usedOptions.append(user_option)
+            game_over_check(usedOptions, total_score)
 
     elif user_option == 7:
 
@@ -255,10 +269,12 @@ def taketurn(dicelist, total_score):
 
             print(f"You rolled four of the same dice\nScore this round is {score}")
             usedOptions.append(user_option)
+            game_over_check(usedOptions, total_score)
 
         else:
             print(f"You did not roll four of the same dice\nScore this round is {score}")
             usedOptions.append(user_option)
+            game_over_check(usedOptions, total_score)
 
 
 
@@ -273,9 +289,11 @@ def taketurn(dicelist, total_score):
 
             print(f"You rolled 1-2-3-4-5! Score this round is {score}")
             usedOptions.append(user_option)
+            game_over_check(usedOptions, total_score)
         else:
             print(f"You did not roll 1-2-3-4-5 Score this round is 0")
             usedOptions.append(user_option)
+            game_over_check(usedOptions, total_score)
 
 
     elif user_option == 9:
@@ -289,9 +307,11 @@ def taketurn(dicelist, total_score):
 
             print(f"You rolled 2-3-4-5-6 Score this round is {score}")
             usedOptions.append(user_option)
+            game_over_check(usedOptions, total_score)
         else:
             print(f"You did not roll 2-3-4-5-6 Score this round is 0")
             usedOptions.append(user_option)
+            game_over_check(usedOptions, total_score)
 
     elif user_option == 10:
         score = sum(dice)
@@ -299,31 +319,28 @@ def taketurn(dicelist, total_score):
 
         print(f"You rolled {str(dice)} Score this round is {score}")
         usedOptions.append(user_option)
+        game_over_check(usedOptions, total_score)
 
 
     elif user_option == 11:
-        result = True
-        first_element = dice[0]
-        for num in dice:
-            if first_element != num:
-                result = False
-                print(f"Your dice rolls are not all equal!\nScore this round is 0")
-                usedOptions.append(user_option)
-            else:
-                result = True
-            if result:
-                score = 50
-                total_score = total_score + score
-                print(f"All your dice rolls are the same!\nScore this round is {score}")
-                usedOptions.append(user_option)
+        el = dice[0]
+
+        if dice.count(el) == 5:
+            score = 50
+            total_score = total_score + score
+            print(f"All your dices were the same! Score this round is {score}")
+            usedOptions.append(user_option)
+            game_over_check(usedOptions, total_score)
+        else:
+            print(f"Your dices were not the same! Score this round is 0")
+            usedOptions.append(user_option)
+            game_over_check(usedOptions, total_score)
 
     else:
         print("[!] Something went wrong!")
 
 
-    play(total_score)
 
-    
 
 def reroll(dice, rolls):
     print("====================")
@@ -560,7 +577,7 @@ def reroll(dice, rolls):
 
 
     elif choice == 4:
-        taketurn(dice, total_score)
+        taketurn(dice, total_score,  usedOptions)
 
     else:
         print("[!] Something Went Wrong!")
@@ -592,7 +609,7 @@ def reroll(dice, rolls):
         reroll(dice, rolls)
 
     elif choicetwo == 2:
-        taketurn(dice, total_score)
+        taketurn(dice, total_score,  usedOptions)
 
 
     else:
@@ -600,11 +617,6 @@ def reroll(dice, rolls):
 
 
 def play(total_score):
-
-    if len(usedOptions) == 11:
-        game_over()
-    else:
-        pass
 
     print(f"Total Score: {total_score}")
     input("Press ENTER to roll the dice!")
@@ -634,7 +646,7 @@ def play(total_score):
                 break
 
             elif choice == 2:
-                taketurn(dice, total_score)
+                taketurn(dice, total_score,  usedOptions)
                 os.system("cls")
                 break
 
@@ -644,13 +656,18 @@ def play(total_score):
             continue
 
 
-def game_over():
+def game_over(total_score):
     print(game_over_art)
     print("==================================")
     print(f"TOTAL SCORE: [{total_score}]      ")
     print("===================================")
-    raise systemexit
+    raise SystemExit
 
+def game_over_check(usedOptions, total_score):
+    if len(usedOptions) == 11:
+        game_over(total_score)
+    else:
+        play(total_score)
 
 
 if __name__ == "__main__":
@@ -662,4 +679,4 @@ if __name__ == "__main__":
           "may be accessed later one!\n")
 
 
-    play(total_score)
+    game_over_check(usedOptions, total_score)
