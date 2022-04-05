@@ -2,12 +2,28 @@ import random
 import os
 from playsound import playsound
 
+def quit():
+    raise SystemExit
+
 def dicesound():
     dir = os.path.dirname(__file__) + '/Sounds/diceroll.mp3'
     playsound(dir)
 
+def correctsound():
+    dir = os.path.dirname(__file__) + '/Sounds/correct.mp3'
+    playsound(dir)
+
+def wrongsound():
+    dir = os.path.dirname(__file__) + '/Sounds/wrong.mp3'
+    playsound(dir)
+
+def storesound():
+    dir = os.path.dirname(__file__) + '/Sounds/storesound.mp3'
+    playsound(dir)
+
+
 title_screen = ("""
-.----------------.  .----------------.  .----------------.  .----------------.  .----------------.   .----------------.  .----------------.  .----------------.  .----------------. 
+.----------------.  .----------------.  .----------------.  .----------------.  .----------------.   .----------------. .----------------.  .----------------.  .----------------. 
 | .--------------. || .--------------. || .--------------. || .--------------. || .--------------. | | .--------------. || .--------------. || .--------------. || .--------------. |
 | |  ____  ____  | || |      __      | || |     ______   | || |  ____  ____  | || |  _________   | | | |    ______    | || |      __      | || | ____    ____ | || |  _________   | |
 | | |_  _||_  _| | || |     /  \     | || |   .' ___  |  | || | |_   ||   _| | || | |  _   _  |  | | | |  .' ___  |   | || |     /  \     | || ||_   \  /   _|| || | |_   ___  |  | |
@@ -23,18 +39,16 @@ title_screen = ("""
 
 
 dice_art = (("""
-   _______
-  /\ o o o\
- /o \ o o o\_______
-<    >------>   o /|
- \ o/  o   /_____/o|
-  \/______/     |oo|
-        |   o   |o/
-        |_______|/
+    _______            
+  /\       \           
+ /()\   ()  \          
+/    \_______\         
+\    /()     /         
+ \()/   ()  /          
+  \/_____()/
 """))
 
 game_over_art = """
-
 ┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
 ███▀▀▀██┼███▀▀▀███┼███▀█▄█▀███┼██▀▀▀
 ██┼┼┼┼██┼██┼┼┼┼┼██┼██┼┼┼█┼┼┼██┼██┼┼┼
@@ -48,7 +62,18 @@ game_over_art = """
 ██┼┼┼┼┼██┼┼┼██┼┼█▀┼┼██┼┼┼┼██┼┼┼┼┼██┼
 ███▄▄▄███┼┼┼─▀█▀┼┼─┼██▄▄▄┼██┼┼┼┼┼██▄
 ┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
-
+┼┼┼┼┼┼┼┼██┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼██┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼████▄┼┼┼▄▄▄▄▄▄▄┼┼┼▄████┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼┼▀▀█▄█████████▄█▀▀┼┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼┼┼┼█████████████┼┼┼┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼┼┼┼██▀▀▀███▀▀▀██┼┼┼┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼┼┼┼██┼┼┼███┼┼┼██┼┼┼┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼┼┼┼█████▀▄▀█████┼┼┼┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼┼┼┼┼███████████┼┼┼┼┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼▄▄▄██┼┼█▀█▀█┼┼██▄▄▄┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼▀▀██┼┼┼┼┼┼┼┼┼┼┼██▀▀┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼┼┼▀▀┼┼┼┼┼┼┼┼┼┼┼▀▀┼┼┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
 """
 
 total_score = 0
@@ -56,9 +81,6 @@ rolls = 3
 
 aside = ["Empty", "Empty", "Empty"]
 
-spare_one = aside[0]
-spare_two = aside[1]
-spare_three = aside[2]
 
 usedOptions = []
 
@@ -111,7 +133,13 @@ def diceroll():
         roll = random.randint(min, max)
         dicelist.append(roll)
 
+
+    print("Rolling the dice...")
+    print("")
+    print(dice_art)
+    print("")
     dicesound()
+
     return dicelist
 
 
@@ -152,14 +180,15 @@ def taketurn(dicelist, total_score, usedOptions):
         if len(ones) == 0:
             print("You had no ones in your dice roll set\nScore this round is 0")
             usedOptions.append(user_option)
+            wrongsound()
             game_over_check(usedOptions, total_score)
 
         else:
             score = len(ones) * 1
             total_score = total_score + score
 
-            print(
-                f"You had {len(ones)} ones in your dice roll set\nScore this round is {score}")
+            print(f"You had {len(ones)} ones in your dice roll set\nScore this round is {score}")
+            correctsound()
             usedOptions.append(user_option)
             game_over_check(usedOptions, total_score)
 
@@ -172,6 +201,7 @@ def taketurn(dicelist, total_score, usedOptions):
 
         if len(twos) == 0:
             print(f"You had no twos in your dice rolls set\nScore this round is 0")
+            wrongsound()
             usedOptions.append(user_option)
             game_over_check(usedOptions, total_score)
 
@@ -179,8 +209,8 @@ def taketurn(dicelist, total_score, usedOptions):
             score = len(twos) * 1
             total_score = total_score + score
 
-            print(
-                f"You had {len(twos)} twos in your dice roll set\nScore this round is {score}")
+            print(f"You had {len(twos)} twos in your dice roll set\nScore this round is {score}")
+            correctsound()
             usedOptions.append(user_option)
             game_over_check(usedOptions, total_score)
 
@@ -192,6 +222,7 @@ def taketurn(dicelist, total_score, usedOptions):
 
         if len(fours) == 0:
             print(f"You had no fours in your dice rolls set\nScore this round is 0")
+            wrongsound()
             usedOptions.append(user_option)
             game_over_check(usedOptions, total_score)
 
@@ -199,8 +230,8 @@ def taketurn(dicelist, total_score, usedOptions):
             score = len(fours) * 1
             total_score = total_score + score
 
-            print(
-                f"You had {len(fours)} fours in your dice roll set\nScore this round is {score}")
+            print(f"You had {len(fours)} fours in your dice roll set\nScore this round is {score}")
+            correctsound()
             usedOptions.append(user_option)
             game_over_check(usedOptions, total_score)
 
@@ -213,6 +244,7 @@ def taketurn(dicelist, total_score, usedOptions):
 
         if len(fives) == 0:
             print(f"You had no fives in your dice rolls set\nScore this round is 0")
+            wrongsound()
             usedOptions.append(user_option)
             game_over_check(usedOptions, total_score)
 
@@ -220,8 +252,8 @@ def taketurn(dicelist, total_score, usedOptions):
             score = len(fives) * 1
             total_score = total_score + score
 
-            print(
-                f"You had {len(fives)} fives in your dice roll set\nScore this round is {score}")
+            print(f"You had {len(fives)} fives in your dice roll set\nScore this round is {score}")
+            correctsound()
             usedOptions.append(user_option)
             game_over_check(usedOptions, total_score)
 
@@ -234,6 +266,7 @@ def taketurn(dicelist, total_score, usedOptions):
 
         if len(sixes) == 0:
             print(f"You had no sixes in your dice rolls set\nScore this round is 0")
+            wrongsound()
             usedOptions.append(user_option)
             game_over_check(usedOptions, total_score)
 
@@ -242,6 +275,7 @@ def taketurn(dicelist, total_score, usedOptions):
             total_score = total_score + score
 
             print(f"You had {len(sixes)} sixes in your dice roll set\nScore this round is {score}")
+            correctsound()
             usedOptions.append(user_option)
             game_over_check(usedOptions, total_score)
 
@@ -266,10 +300,12 @@ def taketurn(dicelist, total_score, usedOptions):
             total_score = total_score + score
 
             print(f"You rolled a Full House!\nScore this round is {score}")
+            correctsound()
             usedOptions.append(user_option)
             game_over_check(usedOptions, total_score)
         else:
             print(f"You did not roll a Full house!\nScore this round is {score}")
+            wrongsound()
             usedOptions.append(user_option)
             game_over_check(usedOptions, total_score)
 
@@ -286,11 +322,13 @@ def taketurn(dicelist, total_score, usedOptions):
             total_score = total_score + score
 
             print(f"You rolled four of the same dice\nScore this round is {score}")
+            correctsound()
             usedOptions.append(user_option)
             game_over_check(usedOptions, total_score)
 
         else:
             print(f"You did not roll four of the same dice\nScore this round is {score}")
+            wrongsound()
             usedOptions.append(user_option)
             game_over_check(usedOptions, total_score)
 
@@ -306,10 +344,12 @@ def taketurn(dicelist, total_score, usedOptions):
             total_score = total_score + score
 
             print(f"You rolled 1-2-3-4-5! Score this round is {score}")
+            correctsound()
             usedOptions.append(user_option)
             game_over_check(usedOptions, total_score)
         else:
             print(f"You did not roll 1-2-3-4-5 Score this round is 0")
+            wrongsound()
             usedOptions.append(user_option)
             game_over_check(usedOptions, total_score)
 
@@ -324,10 +364,12 @@ def taketurn(dicelist, total_score, usedOptions):
             total_score = total_score + score
 
             print(f"You rolled 2-3-4-5-6 Score this round is {score}")
+            correctsound()
             usedOptions.append(user_option)
             game_over_check(usedOptions, total_score)
         else:
             print(f"You did not roll 2-3-4-5-6 Score this round is 0")
+            wrongsound()
             usedOptions.append(user_option)
             game_over_check(usedOptions, total_score)
 
@@ -336,6 +378,7 @@ def taketurn(dicelist, total_score, usedOptions):
         total_score = total_score + score
 
         print(f"You rolled {str(dice)} Score this round is {score}")
+        correctsound()
         usedOptions.append(user_option)
         game_over_check(usedOptions, total_score)
 
@@ -347,20 +390,27 @@ def taketurn(dicelist, total_score, usedOptions):
             score = 50
             total_score = total_score + score
             print(f"All your dices were the same! Score this round is {score}")
+            correctsound()
             usedOptions.append(user_option)
             game_over_check(usedOptions, total_score)
         else:
             print(f"Your dices were not the same! Score this round is 0")
+            wrongsound()
             usedOptions.append(user_option)
             game_over_check(usedOptions, total_score)
 
     else:
         print("[!] Something went wrong!")
+        quit()
 
 
 
 
 def reroll(dice, rolls):
+    spare_one = aside[0]
+    spare_two = aside[1]
+    spare_three = aside[2]
+
     print("====================")
     print(f"Rolls left: {rolls}")
     print("====================")
@@ -391,6 +441,7 @@ def reroll(dice, rolls):
 
         except Exception as err:
             print(f"Something went wrong! >>> {err}")
+            quit()
 
     if choice == 1:
         if rolls == 0:
@@ -414,9 +465,11 @@ def reroll(dice, rolls):
 
             except ValueError:
                 print("That was not a number! Please try again!")
+                continue
 
             except Exception as err:
                 print(f"Something went wrong! >>> {err}")
+                quit()
 
         new = diceroll()
         new = random.choice(new)
@@ -445,18 +498,21 @@ def reroll(dice, rolls):
 
             except ValueError:
                 print("That was not a number! Please try again!")
+                continue
 
             except Exception as err:
                 print(f"Something went wrong! >>> {err}")
+                quit()
 
-
+        storesound()
         aside.append(selection)
+        aside.remove("Empty")
         dice.remove(selection)
         print(f"You have set aside {selection}")
 
         while True:
             try:
-                choicethree = int(input("Would you like to roll a new dice? or access a stored dice to replace the"
+                choicethree = int(input("Would you like to roll a new dice? or access a stored dice to replace the "
                                         "one you set aside?"
                                         "\n==========================================================================="
                                         "======="
@@ -535,6 +591,7 @@ def reroll(dice, rolls):
                     print("That was not a number! Please try again!")
                     continue
 
+            storesound()
             dice.append(new)
             aside.remove(new)
             print(f"You have selected {new} and it has been added to your dice set!"
@@ -588,6 +645,27 @@ def reroll(dice, rolls):
                 print("That was not a number! Please try again!")
                 continue
 
+
+        while True:
+            try:
+                swap = int(input("Please select the dice you would like to swap out!"
+                                 f"\nYour dice set is {dice}"))
+
+                if swap not in range(7):
+                    print("Invalid choice! Please try again!")
+                    contnue
+                elif swap not in dice:
+                    print("The dice you have selected is not in your dice set! Please try again!")
+                else:
+                    break
+
+            except ValueError:
+                print("That was not a number! Please try again")
+                continue
+
+
+        storesound()
+        dice.remove(swap)
         dice.append(new)
         aside.remove(new)
         print(f"You have selected {new} and it has been added to your dice set!"
@@ -599,6 +677,7 @@ def reroll(dice, rolls):
 
     else:
         print("[!] Something Went Wrong!")
+        quit()
 
 
 
@@ -632,17 +711,13 @@ def reroll(dice, rolls):
 
     else:
         print("[!] Something went wrong!")
+        quit()
 
 
 def play(total_score):
 
     print(f"Total Score: {total_score}")
     input("Press ENTER to roll the dice!")
-    print("")
-    print(dice_art)
-    print("")
-    print("Rolling the dice...")
-
     dice = diceroll()
     print(f"You rolled {dice}")
 
@@ -679,7 +754,7 @@ def game_over(total_score):
     print("==================================")
     print(f"TOTAL SCORE: [{total_score}]      ")
     print("===================================")
-    raise SystemExit
+    quit()
 
 def game_over_check(usedOptions, total_score):
     if len(usedOptions) == 11:
