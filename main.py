@@ -592,8 +592,8 @@ def play(total_score):
 
 
 def game_over():
-    print("Game Over")
-
+    print("The game is over! All the moves have been used!\n"
+          f"Total Score is: {total_score}")
 
 
 if __name__ == "__main__":
