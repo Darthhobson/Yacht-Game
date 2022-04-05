@@ -372,7 +372,9 @@ def reroll(dice, rolls):
             except Exception as err:
                 print(f"Something went wrong! >>> {err}")
 
+
         aside.append(selection)
+        dice.remove(selection)
         print(f"You have set aside {selection}")
 
         while True:
@@ -401,7 +403,124 @@ def reroll(dice, rolls):
                 pass
 
             new = diceroll()
-            new = random.choice
+            new = random.choice(new)
+            print(f"You rolled {new}")
+            print(f"Your full dice set is {dice}")
+
+        elif choicethree == 2:
+            if aside.count("Empty") == 3:
+                print("You have no dice set aside! Please select another option!\n")
+            else:
+                pass
+
+            while True:
+                try:
+                    selection = int(input("Please Select A Dice!"
+                                        "========================"
+                                        "Stored Dice:"
+                                        f"\n(1) Dice One: {spare_one}"
+                                        f"\n(2) Dice Two: {spare_two}"
+                                        f"\n(3) Dice Three: {spare_three}"
+                                        f"========================"))
+
+                    if selection not in range(4):
+                        print("Invalid Choice! Please try again!")
+                        continue
+
+                    else:
+                        if selection == 1:
+                            if spare_one == "Empty":
+                                print("This slot is empty! Please try again!")
+                                continue
+                            else:
+                                new = spare_one
+                                break
+                        if selection == 2:
+                            if spare_two == "Empty":
+                                print("This slot is empty! Please try again!")
+                                continue
+                            else:
+                                new = spare_two
+                                break
+                        if selection == 3:
+                            if spare_three == "Empty":
+                                print("This slot is empty! Please try again!")
+                                continue
+                            else:
+                                new = spare_three
+                                break
+
+                except ValueError:
+                    print("That was not a number! Please try again!")
+                    continue
+
+            dice.append(new)
+            aside.remove(new)
+            print(f"You have selected {new} and it has been added to your dice set!"
+                  f"\nYour full dice set is now {dice} ")
+
+    elif choice == 3:
+        if aside.count("Empty") == 3:
+            print("You do not have any dice set aside! Please select another option!")
+            reroll(dice, rolls)
+        else:
+            pass
+
+        while True:
+            try:
+                selection = int(input("Please Select A Dice!"
+                                      "========================"
+                                      "Stored Dice:"
+                                      f"\n(1) Dice One: {spare_one}"
+                                      f"\n(2) Dice Two: {spare_two}"
+                                      f"\n(3) Dice Three: {spare_three}"
+                                      f"========================"))
+
+                if selection not in range(4):
+                    print("Invalid Choice! Please try again!")
+                    continue
+
+                else:
+                    if selection == 1:
+                        if spare_one == "Empty":
+                            print("This slot is empty! Please try again!")
+                            continue
+                        else:
+                            new = spare_one
+                            break
+                    if selection == 2:
+                        if spare_two == "Empty":
+                            print("This slot is empty! Please try again!")
+                            continue
+                        else:
+                            new = spare_two
+                            break
+                    if selection == 3:
+                        if spare_three == "Empty":
+                            print("This slot is empty! Please try again!")
+                            continue
+                        else:
+                            new = spare_three
+                            break
+
+            except ValueError:
+                print("That was not a number! Please try again!")
+                continue
+
+        dice.append(new)
+        aside.remove(new)
+        print(f"You have selected {new} and it has been added to your dice set!"
+              f"\nYour full dice set is now {dice} ")
+
+
+    elif choice == 4:
+        taketurn(dice, total_score)
+
+    else:
+        print("[!] Something Went Wrong!")
+
+
+
 
     while True:
         try:
